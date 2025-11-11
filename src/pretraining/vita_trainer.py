@@ -66,6 +66,11 @@ class VITATrainer(BaseTrainer):
         var_p: torch.Tensor,
     ) -> Dict[str, torch.Tensor]:
         """Compute ELBO loss with reconstruction and KL terms."""
+        # Truncate weather and feature_mask to match model output length
+        seq_len = mu_x.shape[1]
+        weather = weather[:, :seq_len, :]
+        feature_mask = feature_mask[:, :seq_len, :]
+
         n_masked_features = feature_mask.sum(dim=(1, 2)).float().mean()
         reconstruction_term = (
             -gaussian_log_likelihood(weather, mu_x, var_x, feature_mask)

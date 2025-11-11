@@ -8,6 +8,14 @@ Official implementation of VITA, a variational pretraining framework that learns
 
 VITA addresses the data asymmetry problem in agricultural AI: pretraining uses 31 meteorological variables from NASA POWER satellite data, while deployment relies on only 6 basic weather features. Through variational pretraining with a seasonality-aware sinusoidal prior, VITA achieves state-of-the-art performance in predicting corn and soybean yields across 763 U.S. Corn Belt counties, particularly during extreme weather years.
 
+## Usage
+
+### Pretraining
+
+```bash
+python -m src.pretraining.main --batch-size 256 --n-epochs 100 --model-size small --beta 0.5 --data-dir data/
+```
+
 ## Citation
 
 ```bibtex
