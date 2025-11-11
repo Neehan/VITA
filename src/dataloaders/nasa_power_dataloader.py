@@ -4,15 +4,10 @@ import logging
 import random
 from typing import Optional
 from src.utils.constants import (
-    DATA_DIR,
-    DRY_RUN,
-    DRY_RUN_TRAIN_CHUNK_IDS,
     VALIDATION_CHUNK_IDS,
     NUM_DATASET_PARTS,
 )
-import logging
 
-random.seed(1234)
 logger = logging.getLogger(__name__)
 
 
@@ -152,6 +147,7 @@ class NASAPowerDataset(torch.utils.data.IterableDataset):
 
 def nasa_power_dataloader(
     batch_size,
+    data_dir,
     split="train",
     shuffle=False,
     num_input_features=None,
@@ -160,14 +156,10 @@ def nasa_power_dataloader(
     world_size: int = 1,
     rank: int = 0,
 ):
-    data_loader_dir = DATA_DIR + "nasa_power/processed/"
+    data_loader_dir = data_dir + "nasa_power/processed/"
 
-    if DRY_RUN:
-        train_indices = DRY_RUN_TRAIN_CHUNK_IDS
-        test_indices = VALIDATION_CHUNK_IDS[:4]  # Use 4 validation chunks for 4 GPUs
-    else:
-        train_indices = set(range(NUM_DATASET_PARTS)).difference(VALIDATION_CHUNK_IDS)
-        test_indices = VALIDATION_CHUNK_IDS
+    train_indices = set(range(NUM_DATASET_PARTS)).difference(VALIDATION_CHUNK_IDS)
+    test_indices = VALIDATION_CHUNK_IDS
 
     # Convert to lists and create different orderings for each frequency
     indices = train_indices if split.lower() == "train" else test_indices

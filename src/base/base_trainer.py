@@ -12,7 +12,6 @@ from torch.utils.data import DataLoader
 
 from src.base.base_model import BaseModel
 from src.utils import utils
-from src.utils.constants import DATA_DIR, DRY_RUN
 
 
 class BaseTrainer(ABC):
@@ -36,6 +35,7 @@ class BaseTrainer(ABC):
         model: BaseModel,
         batch_size: int,
         num_epochs: int,
+        data_dir: str,
         init_lr: float = 1e-4,
         num_warmup_epochs: int = 5,
         decay_factor: Optional[float] = None,
@@ -47,6 +47,7 @@ class BaseTrainer(ABC):
     ):
         self.model: Union[BaseModel, DDP]  # Add type annotation for model attribute
         self.logger = logging.getLogger(__name__)
+        self.data_dir = data_dir
 
         self._setup_distributed_training(rank, world_size, local_rank)
         self._setup_model_and_device(model, batch_size, num_epochs)
@@ -238,8 +239,6 @@ class BaseTrainer(ABC):
 
             loss_dict = self.compute_train_loss(*input_data)
             loss = loss_dict["total_loss"]
-            if self.rank == 0 and DRY_RUN:
-                print(f"Train loss: {loss.item()}")
 
             self._accumulate_losses(total_loss_dict, loss_dict)
             loader_len += 1
@@ -379,7 +378,7 @@ class BaseTrainer(ABC):
     def _setup_model_directory(self):
         """Setup model directory for saving."""
         if self.rank == 0:
-            self.model_dir = DATA_DIR + "trained_models/pretraining/"
+            self.model_dir = self.data_dir + "trained_models/pretraining/"
             if not os.path.exists(self.model_dir):
                 os.makedirs(self.model_dir)
 

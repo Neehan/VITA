@@ -1,13 +1,22 @@
 import argparse
 import logging
 import os
+import random
+import numpy as np
 import torch
 import torch.distributed as dist
 from src.pretraining.vita_trainer import vita_training_loop
 from src.utils.utils import setup_distributed, cleanup_distributed, setup_logging
 from src.utils.utils import parse_args
+from src.utils.constants import DEFAULT_DATA_DIR
 
 parser = argparse.ArgumentParser()
+parser.add_argument(
+    "--data-dir",
+    help="path to data directory",
+    default=DEFAULT_DATA_DIR,
+    type=str,
+)
 parser.add_argument(
     "--resume-from-checkpoint",
     help="path to resume from checkpoint",
@@ -54,6 +63,20 @@ parser.add_argument(
     default=0.5,
     type=float,
 )
+parser.add_argument(
+    "--seed",
+    help="random seed for reproducibility",
+    default=1234,
+    type=int,
+)
+
+
+def set_seed(seed: int):
+    """Set random seed for reproducibility."""
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
 
 
 def main():
@@ -65,6 +88,9 @@ def main():
 
     try:
         args_dict = parse_args(parser)
+
+        # Set random seed for reproducibility
+        set_seed(args_dict["seed"])
 
         # Add distributed training info to args
         args_dict["rank"] = rank

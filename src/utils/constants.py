@@ -5,15 +5,12 @@ import os
 # Automatically finds and loads the .env file
 load_dotenv()
 
-DATA_DIR = "data/"
-WEATHER_FILE_PATH = DATA_DIR + "nasa_power/train_dataset_weekly.pth"
+DEFAULT_DATA_DIR = "data/"
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Read the STDOUT environment variable
 STDOUT = os.environ.get("STDOUT", "False").lower() in ("true", "1", "t")
-# Read the TEST_ENV environment variable
-DRY_RUN = os.environ.get("DRY_RUN", "False").lower() in ("true", "1", "t")
 
 # Crop yield statistics (mean and std for normalization)
 CROP_YIELD_STATS = {
@@ -32,7 +29,6 @@ MAX_GRANULARITY_DAYS = 31
 MAX_CONTEXT_LENGTH = 364
 NUM_DATASET_PARTS = 119
 VALIDATION_CHUNK_IDS = [7, 30, 56, 59, 93, 106, 110, 24]
-DRY_RUN_TRAIN_CHUNK_IDS = [1, 34, 53, 72, 81]
 
 # Test years for cross-validation
 TEST_YEARS = [2014, 2015, 2016, 2017, 2018]

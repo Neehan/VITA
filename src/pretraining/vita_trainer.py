@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader
 from src.base.base_trainer import BaseTrainer
 from src.base.vita import VITA
 from src.dataloaders.nasa_power_dataloader import nasa_power_dataloader
-from src.utils.constants import DRY_RUN, TOTAL_WEATHER_VARS
+from src.utils.constants import TOTAL_WEATHER_VARS
 from src.utils.losses import compute_gaussian_kl_divergence, gaussian_log_likelihood
 
 
@@ -64,7 +64,6 @@ class VITATrainer(BaseTrainer):
         var_x: torch.Tensor,
         mu_p: torch.Tensor,
         var_p: torch.Tensor,
-        log_losses: bool = False,
     ) -> Dict[str, torch.Tensor]:
         """Compute ELBO loss with reconstruction and KL terms."""
         n_masked_features = feature_mask.sum(dim=(1, 2)).float().mean()
@@ -78,10 +77,6 @@ class VITATrainer(BaseTrainer):
                 weather, feature_mask, mu_x, var_x, mu_p, var_p
             ).mean()
         ) / n_masked_features
-
-        if log_losses or DRY_RUN:
-            self.logger.info(f"Reconstruction Term: {reconstruction_term.item():.6f}")
-            self.logger.info(f"KL Term: {kl_term.item():.6f}")
 
         total_loss = reconstruction_term + kl_term
 
@@ -130,6 +125,7 @@ class VITATrainer(BaseTrainer):
 
         train_loader = nasa_power_dataloader(
             self.batch_size,
+            self.data_dir,
             split="train",
             shuffle=shuffle,
             n_masked_features=current_n_masked,
@@ -139,6 +135,7 @@ class VITATrainer(BaseTrainer):
 
         val_loader = nasa_power_dataloader(
             self.batch_size,
+            self.data_dir,
             split="validation",
             shuffle=False,
             n_masked_features=current_n_masked,
@@ -177,6 +174,7 @@ def vita_training_loop(args_dict):
         model=model,
         batch_size=args_dict["batch_size"],
         num_epochs=args_dict["n_epochs"],
+        data_dir=args_dict["data_dir"],
         init_lr=args_dict["init_lr"],
         num_warmup_epochs=args_dict["n_warmup_epochs"],
         decay_factor=args_dict["decay_factor"],
