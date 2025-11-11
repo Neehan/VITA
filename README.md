@@ -12,6 +12,9 @@ VITA addresses the data asymmetry problem in agricultural AI: pretraining uses 3
 
 ### Data Download
 
+🛰️ Pretraining dataset: [NASA POWER Daily Weather](https://huggingface.co/datasets/notadib/NASA-Power-Daily-Weather)
+🌽 Crop yield dataset: [USA Corn Belt Crop Yield](https://huggingface.co/datasets/notadib/usa-corn-belt-crop-yield)
+
 ```bash
 python -m src.downloaders.nasa_power_dataset
 python -m src.downloaders.khaki_corn_belt_dataset
