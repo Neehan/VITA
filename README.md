@@ -16,6 +16,12 @@ VITA addresses the data asymmetry problem in agricultural AI: pretraining uses 3
 python -m src.pretraining.main --batch-size 256 --n-epochs 100 --model-size small --alpha 0.5 --data-dir data/
 ```
 
+### Crop Yield Prediction
+
+```bash
+python -m src.crop_yield.main --batch-size 64 --n-epochs 40 --model-size small --crop-type soybean --pretrained-model-path path/to/pretrained_model.pt
+```
+
 ## Citation
 
 ```bibtex
