@@ -26,6 +26,8 @@ python -m src.downloaders.khaki_corn_belt_dataset
 python -m src.pretraining.main --batch-size 256 --n-epochs 100 --model-size small --alpha 0.5 --data-dir data/
 ```
 
+**Pretrained model weights:** https://huggingface.co/notadib/VITA
+
 ### Crop Yield Prediction
 
 ```bash
@@ -37,7 +39,7 @@ python -m src.crop_yield.main --batch-size 64 --n-epochs 40 --model-size small -
 ```bibtex
 @inproceedings{hasan2026vita,
       title={VITA: Variational Pretraining of Transformers for Climate-Robust Crop Yield Forecasting},
-      author={Hasan, Adib and Roozbehani, Mardavij and Dahleh, Munther},
+      author={Adib Hasan and Mardavij Roozbehani and Munther Dahleh},
       booktitle={Proceedings of the 40th AAAI Conference on Artificial Intelligence},
       year={2026},
       url={https://arxiv.org/abs/2508.03589},
