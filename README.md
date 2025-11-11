@@ -26,7 +26,7 @@ python -m src.pretraining.main --batch-size 256 --n-epochs 100 --model-size smal
 ### Crop Yield Prediction
 
 ```bash
-python -m src.crop_yield.main --batch-size 64 --n-epochs 40 --model-size small --crop-type soybean --pretrained-model-path path/to/pretrained_model.pt
+python -m src.crop_yield.main --batch-size 64 --n-epochs 40 --model-size small --beta 1e-4 --crop-type soybean --pretrained-model-path path/to/pretrained_model.pt
 ```
 
 ## Citation
