@@ -2,7 +2,7 @@
 
 Official implementation of VITA, a variational pretraining framework that learns weather representations from rich satellite data and transfers them to yield prediction tasks with limited ground-based measurements.
 
-**Paper**: [arXiv:2508.03589](https://arxiv.org/abs/2508.03589)
+**Paper**: [arXiv:2508.03589](https://arxiv.org/abs/2508.03589) | **AAAI 2026**
 
 ## Overview
 
@@ -11,13 +11,11 @@ VITA addresses the data asymmetry problem in agricultural AI: pretraining uses 3
 ## Citation
 
 ```bibtex
-@misc{hasan2025vitavariationalpretrainingtransformers,
+@inproceedings{hasan2026vita,
       title={VITA: Variational Pretraining of Transformers for Climate-Robust Crop Yield Forecasting},
-      author={Adib Hasan and Mardavij Roozbehani and Munther Dahleh},
-      year={2025},
-      eprint={2508.03589},
-      archivePrefix={arXiv},
-      primaryClass={cs.LG},
+      author={Hasan, Adib and Roozbehani, Mardavij and Dahleh, Munther},
+      booktitle={Proceedings of the 40th AAAI Conference on Artificial Intelligence},
+      year={2026},
       url={https://arxiv.org/abs/2508.03589},
 }
 ```
