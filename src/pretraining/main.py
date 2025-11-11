@@ -58,7 +58,7 @@ parser.add_argument(
     type=str,
 )
 parser.add_argument(
-    "--beta",
+    "--alpha",
     help="parameter for sinusoidal prior loss weighting",
     default=0.5,
     type=float,

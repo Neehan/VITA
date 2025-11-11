@@ -17,7 +17,10 @@ if __name__ == "__main__":
     snapshot_download(
         repo_id="notadib/NASA-Power-Daily-Weather",
         repo_type="dataset",
-        allow_patterns="processed/*weekly*",
+        allow_patterns="pytorch/*weekly*",
         local_dir=args.data_dir + "nasa_power",
+    )
+    os.rename(
+        args.data_dir + "nasa_power/pytorch", args.data_dir + "nasa_power/processed"
     )
     logger.info(f"NASA Power dataset downloaded to {args.data_dir + 'nasa_power'}")

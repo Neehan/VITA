@@ -13,7 +13,7 @@ VITA addresses the data asymmetry problem in agricultural AI: pretraining uses 3
 ### Pretraining
 
 ```bash
-python -m src.pretraining.main --batch-size 256 --n-epochs 100 --model-size small --beta 0.5 --data-dir data/
+python -m src.pretraining.main --batch-size 256 --n-epochs 100 --model-size small --alpha 0.5 --data-dir data/
 ```
 
 ## Citation

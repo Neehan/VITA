@@ -20,14 +20,14 @@ class VITATrainer(BaseTrainer):
         self,
         model: VITA,
         n_masked_features: int,
-        beta: float,
+        alpha: float,
         **kwargs,
     ):
         super().__init__(model, **kwargs)
         self.n_masked_features = n_masked_features
-        self.beta = beta
+        self.alpha = alpha
         self.output_json["model_config"]["n_masked_features"] = n_masked_features
-        self.output_json["model_config"]["beta"] = beta
+        self.output_json["model_config"]["alpha"] = alpha
         self.output_json["losses"] = {
             "train": {
                 "total_loss": [],
@@ -77,7 +77,7 @@ class VITATrainer(BaseTrainer):
             / n_masked_features
         ).mean()
         kl_term = (
-            self.beta
+            self.alpha
             * self.compute_kl_loss(
                 weather, feature_mask, mu_x, var_x, mu_p, var_p
             ).mean()
@@ -185,7 +185,7 @@ def vita_training_loop(args_dict):
         decay_factor=args_dict["decay_factor"],
         pretrained_model_path=args_dict["pretrained_model_path"],
         n_masked_features=args_dict["n_masked_features"],
-        beta=args_dict["beta"],
+        alpha=args_dict["alpha"],
         resume_from_checkpoint=args_dict.get("resume_from_checkpoint"),
         rank=rank,
         world_size=world_size,
