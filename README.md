@@ -10,6 +10,13 @@ VITA addresses the data asymmetry problem in agricultural AI: pretraining uses 3
 
 ## Usage
 
+### Data Download
+
+```bash
+python -m src.downloaders.nasa_power_dataset
+python -m src.downloaders.khaki_corn_belt_dataset
+```
+
 ### Pretraining
 
 ```bash
