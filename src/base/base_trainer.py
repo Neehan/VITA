@@ -385,14 +385,27 @@ class BaseTrainer(ABC):
     def _load_pretrained_model(self, pretrained_model_path: Optional[str]):
         """Load pretrained model if provided."""
         if pretrained_model_path and os.path.exists(pretrained_model_path):
-            pretrained_model = torch.load(pretrained_model_path, weights_only=False)
+            checkpoint = torch.load(pretrained_model_path, weights_only=False)
             self.logger.info(
                 f"🔄 Loading pretrained model from: {pretrained_model_path}"
             )
             self.logger.info(
                 "⚠️  IMPORTANT: Loading pretrained weights BEFORE optimizer creation"
             )
-            self._get_underlying_model().load_pretrained(pretrained_model)
+
+            # Handle dict checkpoints (containing model_state_dict or state_dict)
+            if isinstance(checkpoint, dict):
+                if 'model_state_dict' in checkpoint:
+                    state_dict = checkpoint['model_state_dict']
+                elif 'state_dict' in checkpoint:
+                    state_dict = checkpoint['state_dict']
+                else:
+                    state_dict = checkpoint
+                self._get_underlying_model().load_pretrained_state_dict(state_dict)
+            else:
+                # Handle model object directly
+                self._get_underlying_model().load_pretrained(checkpoint)
+
             self.logger.info(
                 "✅ Pretrained model loaded successfully - optimizer will use these weights"
             )
