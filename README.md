@@ -2,7 +2,7 @@
 
 Official implementation of VITA, a variational pretraining framework that learns weather representations from rich satellite data and transfers them to yield prediction tasks with limited ground-based measurements.
 
-**Paper**: [arXiv:2508.03589](https://arxiv.org/abs/2508.03589) | **AAAI 2026**
+[[arXiv:2508.03589]](https://arxiv.org/abs/2508.03589) [[Pretrained Model]]( https://huggingface.co/notadib/VITA) [[AAAI-26]](https://aaai.org/conference/aaai/aaai-26/)
 
 ## Overview
 
@@ -36,7 +36,7 @@ python -m src.pretraining.main --batch-size 256 --n-epochs 100 --model-size smal
 **Note:** This is just an example run. Please check the paper's hyperparameter configuration for the best possible performance. It varies by crop.
 
 ```bash
-python -m src.crop_yield.main --batch-size 64 --n-epochs 40 --model-size small --beta 1e-4 --test-type extreme --crop-type soybean --pretrained-model-path path/to/pretrained_model.pt
+python -m src.crop_yield.main --batch-size 16 --n-epochs 40 --model-size small --beta 1e-4 --init-lr 2.5e-4 --test-type extreme --crop-type soybean --pretrained-model-path path/to/pretrained_model.pth
 ```
 
 ## Citation
