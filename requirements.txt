@@ -1,0 +1,7 @@
+transformers>=4.40,<4.45
+datasets
+huggingface_hub
+python-dotenv
+pandas
+tqdm
+scikit-learn

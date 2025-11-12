@@ -17,6 +17,8 @@ VITA addresses the data asymmetry problem in agricultural AI: pretraining uses 3
 🌽 Crop yield dataset: [USA Corn Belt Crop Yield](https://huggingface.co/datasets/notadib/usa-corn-belt-crop-yield)
 
 ```bash
+pip install -r requirements.txt
+
 python -m src.downloaders.nasa_power_dataset
 python -m src.downloaders.khaki_corn_belt_dataset
 ```
@@ -31,8 +33,10 @@ python -m src.pretraining.main --batch-size 256 --n-epochs 100 --model-size smal
 
 ### Crop Yield Prediction
 
+**Note:** This is just an example run. Please check the paper's hyperparameter configuration for the best possible performance. It varies by crop.
+
 ```bash
-python -m src.crop_yield.main --batch-size 64 --n-epochs 40 --model-size small --beta 1e-4 --crop-type soybean --pretrained-model-path path/to/pretrained_model.pt
+python -m src.crop_yield.main --batch-size 64 --n-epochs 40 --model-size small --beta 1e-4 --test-type extreme --crop-type soybean --pretrained-model-path path/to/pretrained_model.pt
 ```
 
 ## Citation

@@ -135,7 +135,7 @@ class VITAYieldTrainer(BaseTrainer):
             self.n_past_years,
             self.batch_size,
             shuffle,
-            num_workers=0 if self.world_size > 1 else 8,
+            num_workers=1,
             crop_type=self.crop_type,
             test_gap=test_gap,
         )
