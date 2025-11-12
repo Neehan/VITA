@@ -392,20 +392,7 @@ class BaseTrainer(ABC):
             self.logger.info(
                 "⚠️  IMPORTANT: Loading pretrained weights BEFORE optimizer creation"
             )
-
-            # Handle dict checkpoints (containing model_state_dict or state_dict)
-            if isinstance(checkpoint, dict):
-                if 'model_state_dict' in checkpoint:
-                    state_dict = checkpoint['model_state_dict']
-                elif 'state_dict' in checkpoint:
-                    state_dict = checkpoint['state_dict']
-                else:
-                    state_dict = checkpoint
-                self._get_underlying_model().load_pretrained_state_dict(state_dict)
-            else:
-                # Handle model object directly
-                self._get_underlying_model().load_pretrained(checkpoint)
-
+            self._get_underlying_model().load_pretrained(checkpoint)
             self.logger.info(
                 "✅ Pretrained model loaded successfully - optimizer will use these weights"
             )
