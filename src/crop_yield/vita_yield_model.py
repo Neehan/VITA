@@ -68,6 +68,25 @@ class VITAYieldModel(BaseModel):
 
     def load_pretrained(self, pretrained_model):
         """Load pretrained weather model weights"""
+        # Handle dict checkpoints
+        if isinstance(pretrained_model, dict):
+            if 'model_state_dict' in pretrained_model:
+                state_dict = pretrained_model['model_state_dict']
+            elif 'state_dict' in pretrained_model:
+                state_dict = pretrained_model['state_dict']
+            else:
+                state_dict = pretrained_model
+
+            # Fix positional encoding size mismatch (365 -> 364)
+            if 'positional_encoding.pos_encoding' in state_dict:
+                pos_encoding = state_dict['positional_encoding.pos_encoding']
+                if pos_encoding.shape[0] == 365 and self.weather_model.max_len == 364:
+                    state_dict['positional_encoding.pos_encoding'] = pos_encoding[:364, :]
+
+            self.weather_model.load_state_dict(state_dict, strict=False)
+            return
+
+        # Handle model objects
         self.logger.info(f"provided model class: {pretrained_model.__class__.__name__}")
         if isinstance(pretrained_model, VITA):
             weather_model = pretrained_model

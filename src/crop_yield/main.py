@@ -52,13 +52,13 @@ parser.add_argument(
 parser.add_argument(
     "--n-train-years",
     help="number of years of training data to use (start year will be calculated as test_year - n_train_years + 1)",
-    default=5,
+    default=15,
     type=int,
 )
 parser.add_argument(
     "--k",
-    help="number of basis functions for VITA",
-    default=10,
+    help="number of sinusoidal components for VITA",
+    default=1,
     type=int,
 )
 parser.add_argument(
@@ -67,12 +67,7 @@ parser.add_argument(
     default=1e-4,
     type=float,
 )
-parser.add_argument(
-    "--use-optimal-lr",
-    help="whether to find and use optimal learning rate before training",
-    action="store_true",
-    default=False,
-)
+
 parser.add_argument(
     "--seed",
     help="seed for random number generator",
@@ -87,13 +82,6 @@ parser.add_argument(
     choices=[
         "soybean",
         "corn",
-        "wheat",
-        "sunflower",
-        "cotton",
-        "sugarcane",
-        "beans",
-        "corn_rainfed",
-        "beans_rainfed",
     ],
 )
 parser.add_argument(
