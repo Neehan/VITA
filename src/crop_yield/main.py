@@ -40,7 +40,7 @@ parser.add_argument(
 parser.add_argument(
     "--pretrained-model-path",
     help="path to pretrained model weights",
-    default=None,
+    required=True,
     type=str,
 )
 parser.add_argument(

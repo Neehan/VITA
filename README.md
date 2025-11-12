@@ -33,7 +33,7 @@ python -m src.pretraining.main --batch-size 256 --n-epochs 100 --model-size smal
 
 ### Crop Yield Prediction
 
-**Note:** This is just an example run. Please check the paper's hyperparameter configuration for the best possible performance. It varies by crop.
+**Note:** This is an example run. For full hyperparameter configurations that reproduce paper results, see the paper's appendix. Due to non-determinism from hardware differences (GPU type, cuDNN versions) and stochastic training, you may observe small numerical variations from the exact values reported in the paper, though performance should remain in the same ballpark.
 
 ```bash
 python -m src.crop_yield.main --batch-size 16 --n-epochs 40 --model-size small --beta 1e-4 --init-lr 2.5e-4 --test-type extreme --crop-type soybean --pretrained-model-path path/to/pretrained_model.pth
