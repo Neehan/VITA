@@ -12,11 +12,8 @@ from src.utils.constants import (
 )
 from src.crop_yield.vita_yield_model import VITAYieldModel
 from src.dataloaders.khaki_corn_belt_dataloader import (
+    get_train_test_loaders,
     read_khaki_corn_belt_dataset,
-)
-from src.dataloaders.yield_dataloader_weathermodel import (
-    get_train_test_loaders_weathermodel,
-    read_usa_dataset_weathermodel,
 )
 from src.base.cross_validator import CrossValidator
 from src.utils.losses import (
@@ -131,7 +128,7 @@ class VITAYieldTrainer(BaseTrainer):
             return self.train_loader, self.test_loader
 
         test_gap = 4 if self.test_type == "ahead_pred" else 0
-        train_loader, test_loader = get_train_test_loaders_weathermodel(
+        train_loader, test_loader = get_train_test_loaders(
             self.crop_df,
             self.n_train_years,
             self.test_year,
@@ -140,7 +137,6 @@ class VITAYieldTrainer(BaseTrainer):
             shuffle,
             num_workers=1,
             crop_type=self.crop_type,
-            country="usa",
             test_gap=test_gap,
         )
 
@@ -310,7 +306,7 @@ def _create_yield_training_setup(args_dict):
         device = torch.device(f"cuda" if torch.cuda.is_available() else "cpu")
 
     data_dir = args_dict.get("data_dir", DEFAULT_DATA_DIR)
-    crop_df = read_usa_dataset_weathermodel(data_dir)
+    crop_df = read_khaki_corn_belt_dataset(data_dir)
 
     if args_dict.get("test_year") is not None:
         cross_validation_k = 1
